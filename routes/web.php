@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ObraSocialController;
+use App\Http\Controllers\PacienteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +29,14 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
+    Route::resource('/doctores', DoctorController::class)->parameters([
+        'doctores' => 'doctor'
+    ]);
 
+    Route::resource('/pacientes', PacienteController::class);
+    Route::resource('/obras-sociales', ObraSocialController::class)->parameters([
+        'obras-sociales' => 'obraSocial'
+    ]);
 
 
 

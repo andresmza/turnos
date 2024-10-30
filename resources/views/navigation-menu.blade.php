@@ -15,6 +15,16 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('doctores.index') }}" :active="request()->routeIs('doctores')">
+                        {{ __('Doctores') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('pacientes.index') }}" :active="request()->routeIs('pacientes')">
+                        {{ __('Pacientes') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('obras-sociales.index') }}" :active="request()->routeIs('obras-sociales')">
+                        {{ __('Obras Sociales') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 
@@ -141,6 +151,15 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('doctores.index') }}" :active="request()->routeIs('doctores')">
+                {{ __('Doctores') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('pacientes.index') }}" :active="request()->routeIs('pacientes')">
+                {{ __('Pacientes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('obras-sociales.index') }}" :active="request()->routeIs('obras-sociales')">
+                {{ __('Obras Sociales') }}
             </x-responsive-nav-link>
         </div>
 
