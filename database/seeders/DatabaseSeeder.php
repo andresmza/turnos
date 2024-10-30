@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            EspecialidadSeeder::class,
+            SpecialtySeeder::class,
             DoctorSeeder::class,
-            PacienteSeeder::class,
-            PersonasSeeder::class,
+            PatientSeeder::class,
+            PeopleSeeder::class,
         ]);
     }
 }

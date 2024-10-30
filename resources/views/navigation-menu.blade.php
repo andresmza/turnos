@@ -15,13 +15,13 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('doctores.index') }}" :active="request()->routeIs('doctores')">
+                    <x-nav-link href="{{ route('doctors.index') }}" :active="request()->routeIs('doctors')">
                         {{ __('Doctores') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('pacientes.index') }}" :active="request()->routeIs('pacientes')">
+                    <x-nav-link href="{{ route('patients.index') }}" :active="request()->routeIs('patients')">
                         {{ __('Pacientes') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('obras-sociales.index') }}" :active="request()->routeIs('obras-sociales')">
+                    <x-nav-link href="{{ route('health-insurances.index') }}" :active="request()->routeIs('health-insurances')">
                         {{ __('Obras Sociales') }}
                     </x-nav-link>
                     
@@ -152,13 +152,13 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('doctores.index') }}" :active="request()->routeIs('doctores')">
+            <x-responsive-nav-link href="{{ route('doctors.index') }}" :active="request()->routeIs('doctors')">
                 {{ __('Doctores') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('pacientes.index') }}" :active="request()->routeIs('pacientes')">
+            <x-responsive-nav-link href="{{ route('patients.index') }}" :active="request()->routeIs('patients')">
                 {{ __('Pacientes') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('obras-sociales.index') }}" :active="request()->routeIs('obras-sociales')">
+            <x-responsive-nav-link href="{{ route('health-insurances.index') }}" :active="request()->routeIs('health-insurances')">
                 {{ __('Obras Sociales') }}
             </x-responsive-nav-link>
         </div>

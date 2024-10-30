@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Doctor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Staff>
  */
-class DoctorFactory extends Factory
+class StaffFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,12 +16,10 @@ class DoctorFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
             'user_id' => \App\Models\User::factory(),
             'person_id' => \App\Models\Person::factory(),
-            'specialty_id' => \App\Models\Specialty::inRandomOrder()->first()->id,
-            'license_number' => $this->faker->numerify('#########'),
+            'position' => $this->faker->jobTitle,
         ];
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\ObraSocialController;
-use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\HealthInsuranceController;
+use App\Http\Controllers\PatientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,19 +29,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('/doctores', DoctorController::class)->parameters([
-        'doctores' => 'doctor'
+    Route::resource('/doctors', DoctorController::class)->parameters([
+        'doctors' => 'doctor'
     ]);
 
-    Route::resource('/pacientes', PacienteController::class);
-    Route::resource('/obras-sociales', ObraSocialController::class)->parameters([
-        'obras-sociales' => 'obraSocial'
+    Route::resource('/patients', PatientController::class);
+    Route::resource('/health-insurances', HealthInsuranceController::class)->parameters([
+        'health-insurances' => 'healthInsurance'
     ]);
-
-
-
-
-
-
-
 });

@@ -10,12 +10,12 @@ class Doctor extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'doctores';
+    protected $table = 'doctors';
 
     protected $fillable = [
-        'persona_id',
-        'matricula',
-        'especialidad',
+        'person_id',
+        'license_number',
+        'specialty',
     ];
 
     public function user()
@@ -23,13 +23,13 @@ class Doctor extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function persona()
+    public function person()
     {
-        return $this->belongsTo(Persona::class);
+        return $this->belongsTo(Person::class);
     }
 
-    public function especialidad()
+    public function specialty()
     {
-        return $this->belongsTo(Especialidad::class);
+        return $this->belongsTo(Specialty::class);
     }
 }
