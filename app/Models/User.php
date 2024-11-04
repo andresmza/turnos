@@ -57,4 +57,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function staff()
+{
+    return $this->hasOne(Staff::class, 'user_id');
+}
+
+public function doctor()
+{
+    return $this->hasOne(Doctor::class, 'user_id');
+}
 }

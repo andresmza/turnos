@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
             $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade');
             $table->foreignId('medical_office_id')->constrained('medical_offices')->onDelete('cascade');
-            $table->foreignId('operator_id')->constrained('staff')->onDelete('cascade');
+            $table->foreignId('staff_id')->constrained('staffs')->onDelete('cascade');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');

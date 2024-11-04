@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Specialty extends Model
@@ -14,7 +15,15 @@ class Specialty extends Model
 
     protected $fillable = ['name'];
 
-    public function doctors()
+    public static function specialtyWithDoctors()
+    {
+        return self::whereHas('doctors')
+            ->with('doctors')
+            ->orderBy('name', 'asc')
+            ->get();
+    }
+
+    public function doctors(): HasMany
     {
         return $this->hasMany(Doctor::class);
     }

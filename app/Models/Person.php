@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends Model
@@ -20,14 +21,18 @@ class Person extends Model
         'gender',
     ];
 
-    public function doctor()
+    public function doctor(): HasOne
     {
         return $this->hasOne(Doctor::class);
     }
 
-    public function patient()
+    public function patient(): HasOne
     {
         return $this->hasOne(Patient::class);
     }
 
+    public function staff(): HasOne
+    {
+        return $this->hasOne(Staff::class);
+    }
 }
