@@ -28,6 +28,7 @@
                         <p><strong>Hora:</strong> {{ $appointment->start_time }}</p>
                         <p><strong>Duración:</strong> {{ $appointment->duration }}</p>
                         <p><strong>Estado:</strong> {{ $appointment->status == 1 ? 'Atendido' : 'Pendiente' }}</p>
+                        <p><strong>Fecha de creación:</strong> {{ $appointment->created_at->format('d-m-Y H:i:s') }}</p>
                     </div>
                 </div>
 
