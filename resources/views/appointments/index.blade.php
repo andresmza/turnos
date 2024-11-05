@@ -1,12 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- {{dd(isset($user))}} --}}
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                 <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-xl font-bold">Listado de Turnos</h1>
+                    <h1 class="text-xl font-bold">Listado de Turnos No Atendidos</h1>
+                    <!-- Formulario de búsqueda por DNI -->
+                    <form action="{{ route('appointments.index') }}" method="GET" class="flex items-center space-x-2">
+                        <input type="text" name="dni" placeholder="Buscar por DNI"
+                            class="border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring"
+                            value="{{ request('dni') }}">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Buscar
+                        </button>
+                    </form>
                     @if ($user->staff)
                         <a href="{{ route('appointments.create') }}"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -15,11 +23,13 @@
                     @endif
                 </div>
 
+                <!-- Tabla de turnos no atendidos -->
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white border border-gray-300">
                         <thead>
                             <tr>
                                 <th class="px-4 py-2 border-b text-left">Paciente</th>
+                                <th class="px-4 py-2 border-b text-left">Documento</th>
                                 <th class="px-4 py-2 border-b text-left">Doctor</th>
                                 <th class="px-4 py-2 border-b text-left">Fecha</th>
                                 <th class="px-4 py-2 border-b text-left">Hora</th>
@@ -34,6 +44,9 @@
                                     <td class="px-4 py-2 border-b">
                                         {{ $appointment->patient->person->first_name }}
                                         {{ $appointment->patient->person->last_name }}
+                                    </td>
+                                    <td class="px-4 py-2 border-b">
+                                        {{ $appointment->patient->person->document }}
                                     </td>
                                     <td class="px-4 py-2 border-b">
                                         {{ $appointment->doctor->person->first_name }}
@@ -64,7 +77,6 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-500 hover:underline ml-2"
-                                                    onclick="return confirm('¿Está seguro de que desea eliminar este turno?')"
                                                     title="Eliminar">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -81,15 +93,69 @@
                                             </button>
                                         </form>
                                     </td>
-                                </tr>
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="mt-10">
+                    <h1 class="text-xl font-bold py-4">Listado de Turnos Atendidos</h1>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 border-b text-left">Paciente</th>
+                                    <th class="px-4 py-2 border-b text-left">Documento</th>
+                                    <th class="px-4 py-2 border-b text-left">Doctor</th>
+                                    <th class="px-4 py-2 border-b text-left">Fecha</th>
+                                    <th class="px-4 py-2 border-b text-left">Hora</th>
+                                    <th class="px-4 py-2 border-b text-left">Duración</th>
+                                    <th class="px-4 py-2 border-b text-left">Consultorio</th>
+                                    <th class="px-4 py-2 border-b">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($attendedAppointments as $appointment)
+                                    <tr>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->patient->person->first_name }}
+                                            {{ $appointment->patient->person->last_name }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->patient->person->document }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->doctor->person->first_name }}
+                                            {{ $appointment->doctor->person->last_name }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->date }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->start_time }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->duration }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $appointment->medicalOffice->number }}
+                                        </td>
+                                        <td class="px-4 py-2 border-b text-center">
+                                            <a href="{{ route('appointments.show', $appointment->id) }}"
+                                                class="text-blue-500 hover:underline" title="Ver">
+                                                <i class="fas fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
 
 @if (session('success'))
     <div class="toast p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
@@ -116,14 +182,4 @@
     }
 </style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const toasts = document.querySelectorAll('.toast');
-        toasts.forEach(toast => {
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 600);
-            }, 3000);
-        });
-    });
-</script>
+<script src="{{ asset('js/appointments/index.js')}}" ></script>

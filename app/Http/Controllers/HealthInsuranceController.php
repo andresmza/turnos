@@ -44,12 +44,11 @@ class HealthInsuranceController extends Controller
 
     public function update(Request $request, HealthInsurance $healthInsurance)
     {
-        dd($request->all());
         $validated = $request->validate([
             'name' => 'required|max:255',
         ]);
 
-        $healthInsurance->name = $validated['name'];
+        $healthInsurance->Name = $validated['name'];
         $healthInsurance->save();
 
         return redirect()->route('health-insurances.index')->with('success', 'Health insurance updated successfully.');

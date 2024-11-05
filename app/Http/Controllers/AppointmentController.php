@@ -16,45 +16,72 @@ use Illuminate\Support\Facades\Log;
 class AppointmentController extends Controller
 {
 
-    public function index()
-    {
-        $user = auth()->user();
-        // dd($user->doctor, $user->staff, isset($user->staff));
-        // Si el usuario está relacionado con la tabla `doctor`
-        if ($user->doctor) {
-            // Mostrar solo las citas de este doctor, en estado no atendido (status = 0)
-            $appointments = Appointment::with(['patient.person', 'doctor', 'medicalOffice'])
-                ->where('doctor_id', $user->doctor->id)
-                ->where('status', 0) // Estado 0 para "no atendido"
-                ->orderBy('date', 'asc')
-                ->orderBy('start_time', 'asc')
-                ->get();
+    public function index(Request $request)
+{
+    $user = auth()->user();
+    $dni = $request->input('dni'); // Captura el DNI de la solicitud
+
+    // Consulta para turnos en estado no atendido (status = 0)
+    if ($user->doctor) {
+        $appointments = Appointment::with(['patient.person', 'doctor', 'medicalOffice'])
+            ->where('doctor_id', $user->doctor->id)
+            ->where('status', 0);
+
+        // Filtrar por DNI si está presente en la solicitud
+        if ($dni) {
+            $appointments->whereHas('patient.person', function ($query) use ($dni) {
+                $query->where('document', 'like', '%' . $dni . '%');
+            });
         }
-        // Si el usuario está relacionado con la tabla `staff`
-        elseif ($user->staff) {
-            // Mostrar todas las citas en estado no atendido (status = 0)
-            $appointments = Appointment::with(['patient.person', 'doctor.person', 'medicalOffice'])
-                ->where('status', 0) // Estado 0 para "no atendido"
-                ->orderBy('date', 'asc')
-                ->orderBy('start_time', 'asc')
-                ->get();
-        }
-        // Si el usuario no es ni doctor ni staff, redirigir o mostrar un error
-        else {
-            abort(403, 'No tiene permiso para ver esta página.');
+        
+        $appointments = $appointments->orderBy('date', 'asc')->orderBy('start_time', 'asc')->get();
+    } elseif ($user->staff) {
+        $appointments = Appointment::with(['patient.person', 'doctor.person', 'medicalOffice'])
+            ->where('status', 0);
+
+        if ($dni) {
+            $appointments->whereHas('patient.person', function ($query) use ($dni) {
+                $query->where('document', 'like', '%' . $dni . '%');
+            });
         }
 
-        // Obtener los doctores y especialidades (para mostrarlos en filtros o selección si es necesario en la vista)
-        $doctors = Doctor::with('person')->get();
-        $specialties = Specialty::all();
-
-        return view('appointments.index', [
-            'user' => $user,
-            'appointments' => $appointments,
-            'doctors' => $doctors,
-            'specialties' => $specialties
-        ]);
+        $appointments = $appointments->orderBy('date', 'asc')->orderBy('start_time', 'asc')->get();
+    } else {
+        abort(403, 'No tiene permiso para ver esta página.');
     }
+
+    // Consulta para turnos atendidos (status = 1)
+    $attendedAppointments = Appointment::with(['patient.person', 'doctor', 'medicalOffice'])
+        ->where('status', 1);
+
+    if ($dni) {
+        $attendedAppointments->whereHas('patient.person', function ($query) use ($dni) {
+            $query->where('document', 'like', '%' . $dni . '%');
+        });
+    }
+
+    $attendedAppointments = $attendedAppointments->orderBy('date', 'asc')->orderBy('start_time', 'asc')->get();
+
+    // Obtener los doctores y especialidades
+    $doctors = Doctor::with('person')->get();
+    $specialties = Specialty::all();
+// dd([
+//     'user' => $user,
+//     'appointments' => $appointments,
+//     'attendedAppointments' => $attendedAppointments, // Añadir a la vista
+//     'doctors' => $doctors,
+//     'specialties' => $specialties
+// ]);
+    return view('appointments.index', [
+        'user' => $user,
+        'appointments' => $appointments,
+        'attendedAppointments' => $attendedAppointments, // Añadir a la vista
+        'doctors' => $doctors,
+        'specialties' => $specialties
+    ]);
+}
+
+
     public function store(Request $request)
     {
         // Decodificar el JSON de `available_schedule`
@@ -109,7 +136,7 @@ class AppointmentController extends Controller
             'date' => $appointmentDate,
             'start_time' => $start_time,
             'end_time' => $end_time,
-            'status' => 1,
+            'status' => 0,
             // 'specialty_id' => $validated['specialty_id'],
             // 'schedule_id' => $validated['schedule_id'],
         ]);
@@ -182,6 +209,8 @@ class AppointmentController extends Controller
 
         return view('appointments.edit', compact('appointment', 'patients', 'specialties', 'doctors', 'availableDates', 'availableSlots'));
     }
+    
+
 
 
 
@@ -222,12 +251,12 @@ class AppointmentController extends Controller
     }
 
 
-    public function destroy($id)
-    {
-        $appointment = Appointment::findOrFail($id);
-        $appointment->delete();
-        return response()->json(null, 204);
-    }
+    // public function destroy($id)
+    // {
+    //     $appointment = Appointment::findOrFail($id);
+    //     $appointment->delete();
+    //     return response()->json(null, 204);
+    // }
 
     public function markAsAttended($appointmentId)
     {

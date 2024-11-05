@@ -19,13 +19,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        // Redirige a la página principal de usuarios autenticados
+        return redirect()->route('appointments.index');
+    }
+    
+    // Redirige a la página de inicio de sesión si no está autenticado
+    return redirect()->route('login');
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
 
     // Doctor routes
     Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');

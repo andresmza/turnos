@@ -87,6 +87,7 @@ class PatientController extends Controller
 
     public function update(Request $request, Patient $patient)
 {
+    // dd($request->all());
     // Validar los datos
     $request->validate([
         'first_name' => 'required|string|max:255',
@@ -95,7 +96,7 @@ class PatientController extends Controller
         'email' => 'required|email|max:255',
         'phone' => 'required|string|max:15',
         'birth_date' => 'required|date|before:today',
-        'gender' => 'required|in:M,F', // Añadimos la validación para el campo gender
+        'gender' => 'required|in:M,F',
         'health_insurance_id' => 'required|exists:health_insurances,id',
         'affiliate_number' => 'required|string|max:255',
     ]);

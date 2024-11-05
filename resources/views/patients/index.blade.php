@@ -95,15 +95,16 @@
     }
 </style>
 
+<script src="{{ asset('js/patients/index.js')}}" ></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const toasts = document.querySelectorAll('.toast');
-        toasts.forEach(toast => {
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(),
-                600);
-            }, 3000);
-        });
-    });
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const toasts = document.querySelectorAll('.toast');
+    //     toasts.forEach(toast => {
+    //         setTimeout(() => {
+    //             toast.style.opacity = '0';
+    //             setTimeout(() => toast.remove(),
+    //             600);
+    //         }, 3000);
+    //     });
+    // });
 </script>

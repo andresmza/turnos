@@ -26,7 +26,7 @@ class DoctorController extends Controller
         $specialties = Specialty::all();
         $doctors = Doctor::all();
 
-        return view('appointments.create', compact('patients', 'specialties', 'doctors'));
+        return view('doctors.create', compact('patients', 'specialties', 'doctors'));
     }
 
     public function store(Request $request)
