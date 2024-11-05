@@ -1,8 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            {{-- <x-authentication-card-logo /> --}}
-            <img src="{{ asset('https://contenidos.21.edu.ar/microsites/open-lab/assets/img/logo-siglo-top.svg') }}" class="block h-12 w-auto" alt="Logo">
+            <img src="https://contenidos.21.edu.ar/microsites/open-lab/assets/img/logo-siglo-top.svg" class="block h-12 w-auto" alt="Logo">
         </x-slot>
 
         <x-validation-errors class="mb-4" />

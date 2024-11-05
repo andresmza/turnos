@@ -10,7 +10,7 @@
                     </a>
                 </div> --}}
                 <div class="shrink-0 flex items-center">
-                <img src="{{ asset('https://contenidos.21.edu.ar/microsites/open-lab/assets/img/logo-siglo-top.svg') }}" class="block h-12 w-auto" alt="Logo">
+                    <img src="https://contenidos.21.edu.ar/microsites/open-lab/assets/img/logo-siglo-top.svg" class="block h-12 w-auto" alt="Logo">
             </div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
