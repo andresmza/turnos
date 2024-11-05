@@ -36,7 +36,7 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Volver a la lista de turnos
                     </a>
-                    <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
+                    <a href="#" class="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded ml-4" disabled>
                         Historia Clínica
                     </a>
                 </div>
