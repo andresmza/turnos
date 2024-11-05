@@ -60,18 +60,12 @@ class AppointmentController extends Controller
         });
     }
 
-    $attendedAppointments = $attendedAppointments->orderBy('date', 'asc')->orderBy('start_time', 'asc')->get();
+    $attendedAppointments = $attendedAppointments->orderBy('date', 'desc')->orderBy('start_time', 'desc')->get();
 
     // Obtener los doctores y especialidades
     $doctors = Doctor::with('person')->get();
     $specialties = Specialty::all();
-// dd([
-//     'user' => $user,
-//     'appointments' => $appointments,
-//     'attendedAppointments' => $attendedAppointments, // Añadir a la vista
-//     'doctors' => $doctors,
-//     'specialties' => $specialties
-// ]);
+
     return view('appointments.index', [
         'user' => $user,
         'appointments' => $appointments,
